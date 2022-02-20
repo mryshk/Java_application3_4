@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import java.time.LocalDateTime;
 
 public class Post {
+	private int postId;
 	private String music_name;
 	private String artist_name;
 	private PostComment postComment;
@@ -19,6 +20,13 @@ public class Post {
 
 //	getter/setter
 	
+	public int getPostId() {
+		return postId;
+	}
+	public void setPostId(int postId) {
+		this.postId = postId;
+	}
+
 	public String getMusic_name() {
 		return music_name;
 	}
