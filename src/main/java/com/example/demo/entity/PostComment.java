@@ -27,7 +27,7 @@ public class PostComment {
 		this.userId = userId;
 	}
 	public int getPostId() {
-		return post_id;
+		return postId;
 	}
 	public void setPostId(int postId) {
 		postId = postId;
