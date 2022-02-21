@@ -9,6 +9,8 @@ import com.example.demo.entity.PostComment;
 
 public class PostForm {
 	
+	private int user_id;
+	
 	@NotNull (message = "楽曲名を入力してください。")
 	@Size(min=1, max=100, message="1文字以上100文字以上の記入が必要です。")
 	private String music_name;
@@ -38,6 +40,9 @@ public class PostForm {
 	
 //	コンストラクタ
 	
+	
+	public PostForm() {}
+	
 	public PostForm(
             String music_name,
 		    String artist_name,
@@ -57,6 +62,19 @@ public class PostForm {
 	
 	
 //  getter/setter
+	
+
+
+
+
+
+	public int getUserId() {
+		return user_id;
+	}
+	public void setUserId(int user_id) {
+		this.user_id = user_id;
+	}
+	
 	public String getMusic_name() {
 		return music_name;
 	}
