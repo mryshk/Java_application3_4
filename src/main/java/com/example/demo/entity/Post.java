@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class Post {
 	private int id;
+	private int user_id;
 	private String music_name;
 	private String artist_name;
 	private PostComment postComment;
@@ -25,6 +26,13 @@ public class Post {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public int getUserId() {
+		return user_id;
+	}
+	public void setUserId(int id) {
+		this.user_id = user_id;
 	}
 
 	public String getMusic_name() {
