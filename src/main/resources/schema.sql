@@ -1,7 +1,7 @@
 
  
  CREATE TABLE IF NOT EXISTS post(
-    post_id int(2) AUTO_INCREMENT PRIMARY KEY,
+    id int(2) AUTO_INCREMENT PRIMARY KEY,
     user_id int(2) NOT NULL,
     music_name VARCHAR(100),
     artist_name VARCHAR(100) ,
@@ -10,3 +10,17 @@
     created DATETIME
  );
  
+CREATE TABLE user(
+    id int(2) AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL
+  );
+  
+CREATE TABLE postComment(
+    id int(2) AUTO_INCREMENT PRIMARY KEY,
+    post_id int(2),
+    user_id int(2),
+    comment TEXT NOT NULL,
+    created DATETIME
+  );
