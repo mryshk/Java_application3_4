@@ -66,7 +66,7 @@ public class PostController {
 			List<Post> list = postService.findAll();
 			model.addAttribute("list", list);
 			model.addAttribute("title","投稿一覧バリデーション");	
-			return "task/index";
+			return "post/index";
 			
 		}
 		
@@ -112,7 +112,7 @@ public class PostController {
 			
 			postService.update(post);
 			redirectAttributes.addFlashAttribute("complete","完了しました。");
-			return "redirect:/post" + postId;
+			return "redirect:/post";
 			
 		}else {
 			model.addAttribute("postForm",postForm);
@@ -145,7 +145,7 @@ public class PostController {
 			post.setId(postId);
 		}
 		
-		post.setUserId(0);
+		post.setUserId(1);
 		post.setMusic_name(postForm.getMusic_name());
 		post.setArtist_name(postForm.getArtist_name());
 		post.setGenre(postForm.getGenre());
