@@ -119,7 +119,7 @@ public class PostForm {
 		return newPost;
 	}
 	
-	public void settNewPost(boolean newPost) {
+	public void setNewPost(boolean newPost) {
 		this.newPost = newPost;
 	}
 	

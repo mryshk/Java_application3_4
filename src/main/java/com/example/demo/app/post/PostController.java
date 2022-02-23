@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,7 @@ import com.example.demo.service.PostService;
 @RequestMapping("/post")
 public class PostController {
 	
+	@Autowired
 	private final PostService postService;
 	
 	public PostController(PostService postService) {
@@ -34,7 +36,7 @@ public class PostController {
 	@GetMapping
 	public String post(PostForm postForm,Model model) {
 		
-		postForm.settNewPost(true);
+		postForm.setNewPost(true);
 		
 		List<Post> list = postService.findAll();
 		
@@ -59,7 +61,7 @@ public class PostController {
 			
 			
 		}else {
-			postForm.settNewPost(true);
+			postForm.setNewPost(true);
 			model.addAttribute("postForm", postForm);
 			List<Post> list = postService.findAll();
 			model.addAttribute("list", list);
@@ -89,7 +91,7 @@ public class PostController {
 		model.addAttribute("postForm",postForm);
 		List<Post> list = postService.findAll();
 		model.addAttribute("list",list);
-		model.addAttribute("taskId",id);
+		model.addAttribute("postId",id);
 		model.addAttribute("title","更新用フォーム");
 		
 		return "post/index";
@@ -161,7 +163,7 @@ public class PostController {
 		postForm.setArtist_name(post.getArtist_name());
 		postForm.setGenre(post.getGenre());
 		postForm.setCaption(post.getCaption());
-		postForm.settNewPost(false);
+		postForm.setNewPost(false);
 		
 		return postForm;
 	}

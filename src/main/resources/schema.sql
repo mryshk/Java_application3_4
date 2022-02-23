@@ -1,15 +1,12 @@
-DROP TABLE IF EXISTS post;
 
-CREATE TABLE post(
-    id int AUTO_INCREMENT PRIMARY KEY,
-    user_id int,
-    music_name VARCHAR(100) NOT NULL,
+ 
+ CREATE TABLE IF NOT EXISTS post(
+    post_id int(2) AUTO_INCREMENT PRIMARY KEY,
+    user_id int(2) NOT NULL,
+    music_name VARCHAR(100),
     artist_name VARCHAR(100) ,
-    genre int NOT NULL,
-    caption VARCHAR(255) NOT NULL,
-    created DATE,
-    FOREIGN KEY(user_id) REFERENCES users.id
+    genre int(1),
+    caption VARCHAR(200) NOT NULL,
+    created DATETIME
  );
- 
- 
  
