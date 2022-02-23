@@ -26,8 +26,8 @@ public class PostDaoImpl implements PostDao {
 	@Override
 	public List<Post> findAll() {
 		
-		String sql = "SELECT post.id,user_id,music_name,artist_name,genre,caption,post.created,comment, postComment.created," 
-				+ "FROM post INNER JOIN postComment ON post.id = postComment.post_id";
+		String sql = "SELECT post.id, post.user_id ,music_name, artist_name, genre, caption, post.created, postComment.post_id, postComment.user_id, comment, postComment.created FROM post LEFT JOIN postComment ON post.id = postComment.post_id";
+
 		List<Map<String,Object>> resultList = jdbcTemplate.queryForList(sql);
 		
 		List<Post> list = new ArrayList<Post>();
@@ -35,13 +35,15 @@ public class PostDaoImpl implements PostDao {
 		for(Map<String,Object> result : resultList) {
 			Post post = new Post();
 			post.setId((int)result.get("id"));
-			post.setMusic_name((String)result.get("artist_name"));
+			post.setUserId((int)result.get("user_id"));
+			post.setMusic_name((String)result.get("music_name"));
 			post.setArtist_name((String)result.get("artist_name"));
 			post.setGenre((int)result.get("genre"));
 			post.setCaption((String)result.get("caption"));
 			post.setCreated(((Timestamp)result.get("created")).toLocalDateTime());
 			
 			PostComment postComment = new PostComment();
+			postComment.setUserId((int)result.get("user_id"));
 			postComment.setComment((String)result.get("comment"));
 			postComment.setCreated(((Timestamp)result.get("created")).toLocalDateTime());
 			
@@ -54,8 +56,8 @@ public class PostDaoImpl implements PostDao {
 	@Override
 	public Optional<Post> findById(int id) {
 		String sql = "SELECT\n"
-				+ "  id,\n"
-				+ "  user_id,\n"
+				+ "  post.id,\n"
+				+ "  post.user_id,\n"
 				+ "  music_name,\n"
 				+ "  artist_name,\n"
 				+ "  genre,\n"
@@ -64,10 +66,10 @@ public class PostDaoImpl implements PostDao {
 				+ "  postComment.created\n"
 				+ "FROM\n"
 				+ "  post\n"
-				+ "INNER JOIN postComment ON post.id = postComment.post_id\n"
+				+ "LEFT JOIN postComment ON post.id = postComment.post_id\n"
 				+ "WHERE post.id = ?";
 		
-		Map<String,Object> result = jdbcTemplate.queryForMap(sql);
+		Map<String,Object> result = jdbcTemplate.queryForMap(sql, id);
 		
 		Post post = new Post();
 		post.setId((int)result.get("id"));
@@ -89,8 +91,8 @@ public class PostDaoImpl implements PostDao {
 
 	@Override
 	public void insert(Post post) {
-		jdbcTemplate.update("INSERT INTO post(music_name,artist_name,genre,caption,created)\n"
-				+ "VALUES(?,?,?,?,?)",post.getMusic_name(), post.getArtist_name(), post.getGenre(), post.getCaption(),post.getCreated());
+		jdbcTemplate.update("INSERT INTO post(user_id, music_name,artist_name,genre,caption,created)\n"
+				+ "VALUES(?,?,?,?,?,?)",post.getUserId(),post.getMusic_name(), post.getArtist_name(), post.getGenre(), post.getCaption(),post.getCreated());
 		
 	}
 
