@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Post {
 	private int id;
@@ -10,7 +10,7 @@ public class Post {
 	private PostComment postComment;
 	private int genre;
 	private String caption;
-	private LocalDateTime created;
+	private LocalDate created;
 	
 	
 //	コンストラクタ(引数なし)
@@ -70,10 +70,10 @@ public class Post {
 	public void setCaption(String caption) {
 		this.caption = caption;
 	}
-	public LocalDateTime getCreated() {
+	public LocalDate getCreated() {
 		return created;
 	}
-	public void setCreated(LocalDateTime created) {
+	public void setCreated(LocalDate created) {
 		this.created = created;
 	}
 	

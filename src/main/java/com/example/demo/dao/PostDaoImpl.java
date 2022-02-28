@@ -40,12 +40,12 @@ public class PostDaoImpl implements PostDao {
 			post.setArtist_name((String)result.get("artist_name"));
 			post.setGenre((int)result.get("genre"));
 			post.setCaption((String)result.get("caption"));
-			post.setCreated(((Timestamp)result.get("created")).toLocalDateTime());
+			post.setCreated((((Timestamp)result.get("created")).toLocalDateTime()).toLocalDate());
 			
 			PostComment postComment = new PostComment();
 			postComment.setUserId((int)result.get("user_id"));
 			postComment.setComment((String)result.get("comment"));
-			postComment.setCreated(((Timestamp)result.get("created")).toLocalDateTime());
+			postComment.setCreated((((Timestamp)result.get("created")).toLocalDateTime()).toLocalDate());
 			
 			post.setPostComment(postComment);
 			list.add(post);
@@ -77,11 +77,11 @@ public class PostDaoImpl implements PostDao {
 		post.setArtist_name((String)result.get("artist_name"));
 		post.setGenre((int)result.get("genre"));
 		post.setCaption((String)result.get("caption"));
-		post.setCreated(((Timestamp)result.get("created")).toLocalDateTime());
+		post.setCreated((((Timestamp)result.get("created")).toLocalDateTime()).toLocalDate());
 		
 		PostComment postComment = new PostComment();
 		postComment.setComment((String)result.get("comment"));
-		postComment.setCreated(((Timestamp)result.get("created")).toLocalDateTime());
+		postComment.setCreated((((Timestamp)result.get("created")).toLocalDateTime()).toLocalDate());
 		post.setPostComment(postComment);
 		
 		Optional<Post> postOpt = Optional.ofNullable(post);

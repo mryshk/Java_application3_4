@@ -1,13 +1,13 @@
 package com.example.demo.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class PostComment {
 	
 	private int userId;
 	private int postId;
 	private String comment;
-	private LocalDateTime created;
+	private LocalDate created;
 	
 	
 	
@@ -38,10 +38,10 @@ public class PostComment {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	public LocalDateTime getCreated() {
+	public LocalDate getCreated() {
 		return created;
 	}
-	public void setCreated(LocalDateTime created) {
+	public void setCreated(LocalDate created) {
 		this.created = created;
 	}
 	
