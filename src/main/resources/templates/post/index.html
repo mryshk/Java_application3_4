@@ -15,14 +15,14 @@
     <input type="text" name="artist_name" th:value="*{artist_name}">
     <div th:if="${#fields.hasErrors('artist_name')}" th:errors="*{artist_name}"></div>
     <label>ジャンル：</label>
-    <select name="genre">
-      <option value="1" th:selected="*{genre == 1}">JPOP</option>
-      <option value="2" th:selected="*{genre == 2}">ROCK</option>
-      <option value="3" th:selected="*{genre == 3}">EDM</option>
-      <option value="4" th:selected="*{genre == 4}">KPOP</option>
-      <option value="5" th:selected="*{genre == 5}">HIPHOP</option>
+    <select name="genreId">
+      <option value="1" th:selected="*{genreId == 1}">ROCK</option>
+      <option value="2" th:selected="*{genreId == 2}">JPOP</option>
+      <option value="3" th:selected="*{genreId == 3}">HIPHOP</option>
+      <option value="4" th:selected="*{genreId == 4}">KPOP</option>
+      <option value="5" th:selected="*{genreId == 5}">EDM</option>
     </select></br>
-    <div th:if="${#fields.hasErrors('genre')}" th:errors="${genre}"></div>
+    <div th:if="${#fields.hasErrors('genreId')}" th:errors="${genreId}"></div>
     <label>説明文：</label>
     <textarea name="caption" id="caption" rows="3" cols="40" th:field="*{caption}"></textarea><br>
     <div th:if="${#fields.hasErrors('caption')}" th:errors="*{caption}"></div>
@@ -39,7 +39,7 @@
     <tr th:each="obj : ${list}">
       <td th:text="${obj.music_name}"></td>
       <td th:text="${obj.artist_name}"></td>
-      <td th:text="${obj.genre}"></td>
+      <td th:text="${obj.genreType.genre}"></td>
       <td th:text="${obj.caption}"></td>
       <td th:text="${obj.created}"></td>
       <td><a type="button" th:href="@{/post/{id}(id=${obj.id})}">編集</a></td>
