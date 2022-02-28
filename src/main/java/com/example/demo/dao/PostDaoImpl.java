@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.entity.GenreType;
 import com.example.demo.entity.Post;
-import com.example.demo.entity.PostComment;
 
 @Repository
 public class PostDaoImpl implements PostDao {
@@ -26,7 +26,7 @@ public class PostDaoImpl implements PostDao {
 	@Override
 	public List<Post> findAll() {
 		
-		String sql = "SELECT post.id, post.user_id ,music_name, artist_name, genre, caption, post.created, postComment.post_id, postComment.user_id, comment, postComment.created FROM post LEFT JOIN postComment ON post.id = postComment.post_id";
+		String sql = "SELECT post.id, post.user_id ,music_name, artist_name, genre_id, caption, post.created, genreType.id, genreType.genre FROM post INNER JOIN genreType ON post.genre_id = genreType.id";
 
 		List<Map<String,Object>> resultList = jdbcTemplate.queryForList(sql);
 		
@@ -38,16 +38,15 @@ public class PostDaoImpl implements PostDao {
 			post.setUserId((int)result.get("user_id"));
 			post.setMusic_name((String)result.get("music_name"));
 			post.setArtist_name((String)result.get("artist_name"));
-			post.setGenre((int)result.get("genre"));
+			post.setGenreId((int)result.get("genre_id"));
 			post.setCaption((String)result.get("caption"));
 			post.setCreated((((Timestamp)result.get("created")).toLocalDateTime()).toLocalDate());
 			
-			PostComment postComment = new PostComment();
-			postComment.setUserId((int)result.get("user_id"));
-			postComment.setComment((String)result.get("comment"));
-			postComment.setCreated((((Timestamp)result.get("created")).toLocalDateTime()).toLocalDate());
+			GenreType genreType = new GenreType();
+			genreType.setId((int)result.get("genre_id"));
+			genreType.setGenre((String)result.get("genre"));
 			
-			post.setPostComment(postComment);
+			post.setGenreType(genreType);
 			list.add(post);
 		}
 		return list;
@@ -55,34 +54,25 @@ public class PostDaoImpl implements PostDao {
 
 	@Override
 	public Optional<Post> findById(int id) {
-		String sql = "SELECT\n"
-				+ "  post.id,\n"
-				+ "  post.user_id,\n"
-				+ "  music_name,\n"
-				+ "  artist_name,\n"
-				+ "  genre,\n"
-				+ "  post.created,\n"
-				+ "  comment,\n"
-				+ "  postComment.created\n"
-				+ "FROM\n"
-				+ "  post\n"
-				+ "LEFT JOIN postComment ON post.id = postComment.post_id\n"
-				+ "WHERE post.id = ?";
+		String sql = "SELECT post.id,user_id,music_name,artist_name,genre_id,created,genreType.id,genreType.genre FROM post INNER JOIN genreType ON post.genre_id = genreType.id WHERE post.id = ?";
+
 		
 		Map<String,Object> result = jdbcTemplate.queryForMap(sql, id);
 		
 		Post post = new Post();
 		post.setId((int)result.get("id"));
-		post.setMusic_name((String)result.get("artist_name"));
+		post.setMusic_name((String)result.get("music_name"));
 		post.setArtist_name((String)result.get("artist_name"));
-		post.setGenre((int)result.get("genre"));
+		post.setGenreId((int)result.get("genre_id"));
 		post.setCaption((String)result.get("caption"));
 		post.setCreated((((Timestamp)result.get("created")).toLocalDateTime()).toLocalDate());
 		
-		PostComment postComment = new PostComment();
-		postComment.setComment((String)result.get("comment"));
-		postComment.setCreated((((Timestamp)result.get("created")).toLocalDateTime()).toLocalDate());
-		post.setPostComment(postComment);
+		
+		GenreType genreType = new GenreType();
+		genreType.setId((int)result.get("genre_id"));
+		genreType.setGenre((String)result.get("genre"));
+		
+		post.setGenreType(genreType);
 		
 		Optional<Post> postOpt = Optional.ofNullable(post);
 		
@@ -91,16 +81,16 @@ public class PostDaoImpl implements PostDao {
 
 	@Override
 	public void insert(Post post) {
-		jdbcTemplate.update("INSERT INTO post(user_id, music_name,artist_name,genre,caption,created)\n"
-				+ "VALUES(?,?,?,?,?,?)",post.getUserId(),post.getMusic_name(), post.getArtist_name(), post.getGenre(), post.getCaption(),post.getCreated());
+		jdbcTemplate.update("INSERT INTO post(user_id, music_name,artist_name,genre_id,caption,created)\n"
+				+ "VALUES(?,?,?,?,?,?)",post.getUserId(),post.getMusic_name(), post.getArtist_name(), post.getGenreId(), post.getCaption(),post.getCreated());
 		
 	}
 
 	@Override
 	public int update(Post post) {
 		
-		return jdbcTemplate.update("UPDATE post SET music_name = ?,artist_name=?,genre = ?, caption = ?, created = ? WHERE id = ?",
-				post.getMusic_name(), post.getArtist_name(), post.getGenre(), post.getCaption(),post.getCreated(),post.getId());
+		return jdbcTemplate.update("UPDATE post SET music_name = ?,artist_name=?,genre_id = ?, caption = ?, created = ? WHERE id = ?",
+				post.getMusic_name(), post.getArtist_name(), post.getGenreId(), post.getCaption(),post.getCreated(),post.getId());
 	}
 
 	@Override

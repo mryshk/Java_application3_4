@@ -5,7 +5,7 @@
     user_id int(2) NOT NULL,
     music_name VARCHAR(100),
     artist_name VARCHAR(100) ,
-    genre int(1),
+    genre_id int(1),
     caption VARCHAR(200) NOT NULL,
     created DATETIME
  );
@@ -23,4 +23,9 @@ CREATE TABLE postComment(
     user_id int(2),
     comment TEXT NOT NULL,
     created DATETIME
+  );
+  
+CREATE TABLE genreType(
+  id int(2) AUTO_INCREMENT PRIMARY KEY,
+  genre VARCHAR(100) NOT NULL
   );

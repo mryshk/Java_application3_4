@@ -1,6 +1,6 @@
 package com.example.demo.app.post;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -148,9 +148,9 @@ public class PostController {
 		post.setUserId(1);
 		post.setMusic_name(postForm.getMusic_name());
 		post.setArtist_name(postForm.getArtist_name());
-		post.setGenre(postForm.getGenre());
+		post.setGenreId(postForm.getGenreId());
 		post.setCaption(postForm.getCaption());
-		post.setCreated(LocalDateTime.now());
+		post.setCreated(LocalDate.now());
 		
 		return post;
 	}
@@ -161,7 +161,7 @@ public class PostController {
 		postForm.setUserId(post.getUserId());
 		postForm.setMusic_name(post.getMusic_name());
 		postForm.setArtist_name(post.getArtist_name());
-		postForm.setGenre(post.getGenre());
+		postForm.setGenreId(post.getGenreId());
 		postForm.setCaption(post.getCaption());
 		postForm.setNewPost(false);
 		

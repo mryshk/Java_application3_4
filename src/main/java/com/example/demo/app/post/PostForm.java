@@ -23,7 +23,7 @@ public class PostForm {
 	
 	@NotNull (message = "ジャンルを入力してください。")
 	@Digits(integer=1, fraction=0)
-	private int genre;
+	private int genreId;
 	
 	@NotNull (message = "説明文を入力してください。")
 	@Size(min=1, max=200,message="1文字以上200文字以上の記入が必要です。")
@@ -47,13 +47,13 @@ public class PostForm {
             String music_name,
 		    String artist_name,
 			PostComment postComment,
-			int genre,
+			int genreId,
 			String caption,
 			boolean newPost) {
 		this.music_name = music_name;
 		this.artist_name = artist_name;
 		this.postComment = postComment;
-		this.genre = genre;
+		this.genreId = genreId;
 		this.caption = caption;
 		this.newPost = newPost;
 	}
@@ -99,12 +99,12 @@ public class PostForm {
 		this.postComment = postComment;
 	}
 
-	public int getGenre() {
-		return genre;
+	public int getGenreId() {
+		return genreId;
 	}
 
-	public void setGenre(int genre) {
-		this.genre = genre;
+	public void setGenreId(int genreId) {
+		this.genreId = genreId;
 	}
 
 	public String getCaption() {
