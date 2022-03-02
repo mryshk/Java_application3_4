@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title th:text="${title}">Insert title here</title>
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+<link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!-- ナビバー -->
+  <nav class="navbar navbar-expand-lg main-color">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" th:href="@{/post}" >MusicPost</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link text-white" aria-current="page" href="#" th:href="@{/post/index}">Index</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="#" th:href="@{/post/form}">Form</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  </nav>
+
+  <!-- タイトル -->
+  <i class="fa-solid fa-house"></i>
+  <h2  class="text-center" style="margin-top: 50px;"  th:text="${heading}" >見出し</h2>
+  <p　class="text-center" th:if="${complete}" th:text="${complete}"></p>
+
+  <div class="row" style="margin-top: 50px;">
+    <div class="col-6 offset-3"style="margin-top: 100px; margin-bottom:100px;">
+      <form method="POST" th:action="${postForm.newPost}? @{/post/insert} : @{/post/update}" th:object="${postForm}">
+        <!-- 楽曲フォーム -->
+        <label class="form-label">楽曲</label>
+        <input class="form-control" type="text" name="music_name" th:value="*{music_name}">
+        <div th:if="${#fields.hasErrors('music_name') }" th:errors="*{music_name}" ></div>
+        <!-- アーティスト名フォーム -->
+        <label class="form-label">アーティスト名</label>
+        <input class="form-control" type="text" name="artist_name" th:value="*{artist_name}">
+        <div th:if="${#fields.hasErrors('artist_name')}" th:errors="*{artist_name}"></div>
+        <!-- ジャンル選択 -->
+        <label class="form-label">ジャンル</label>
+        <select class="form-select" aria-label="ジャンル選択" name="genreId">
+          <option value="1" th:selected="*{genreId == 1}">ROCK</option>
+          <option value="2" th:selected="*{genreId == 2}">JPOP</option>
+          <option value="3" th:selected="*{genreId == 3}">HIPHOP</option>
+          <option value="4" th:selected="*{genreId == 4}">KPOP</option>
+          <option value="5" th:selected="*{genreId == 5}">EDM</option>
+        </select></br>
+        <div th:if="${#fields.hasErrors('genreId')}" th:errors="${genreId}"></div>
+        <!-- 説明文 -->
+        <label class="form-label">説明文</label>
+        <textarea class="form-control"  name="caption" id="caption" rows="3" cols="40" th:field="*{caption}"></textarea><br>
+        <div th:if="${#fields.hasErrors('caption')}" th:errors="*{caption}"></div>
+        <!-- 投稿IDをhiddenで送信。updateのため。 -->
+        <input th:if="${postId}" type="hidden" name="postId" th:value="${postId}">
+        <!-- 投稿ボタン。 -->
+        <input class="btn btn-info" type="submit" value="投稿">
+      </form>
+    </div>
+  </div>
+  <br>
+  <p th:unless="${postForm.newPost}"><a style="color:black" href="#" th:href="@{/post}">戻る</a></p>
+  
+<script src="https://kit.fontawesome.com/fe634eb8bd.js" crossorigin="anonymous"></script>
+<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+  
+</body>
+</html>
