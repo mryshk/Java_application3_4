@@ -43,7 +43,28 @@ public class PostController {
 		model.addAttribute("list", list);
 		model.addAttribute("heading", "Home");
 		model.addAttribute("title", "投稿一覧");
+		return "post/home";
+	}
+	
+//	一覧のみページ
+	@GetMapping("/index")
+	public String index(PostForm postForm, Model model) {
+		
+		postForm.setNewPost(true);
+		
+		List<Post> list = postService.findAll();
+		
+		model.addAttribute("list", list);
+		model.addAttribute("heading", "Index");
+		model.addAttribute("title","投稿一覧");
 		return "post/index";
+	}
+	
+	@GetMapping("/form")
+	public String form(PostForm postForm, Model model) {
+		postForm.setNewPost(true);
+		model.addAttribute("heading", "Form");
+		return "post/form";
 	}
 	
 //	新規登録（投稿Post）
@@ -57,7 +78,7 @@ public class PostController {
 		if (!result.hasErrors()) {
 			Post post = makePost(postForm,0);
 			postService.insert(post);
-			return "redirect:/post";
+			return "redirect:/post/index";
 			
 			
 		}else {
@@ -66,7 +87,7 @@ public class PostController {
 			List<Post> list = postService.findAll();
 			model.addAttribute("list", list);
 			model.addAttribute("title","投稿一覧バリデーション");	
-			return "post/index";
+			return "post/home";
 			
 		}
 		
@@ -94,7 +115,7 @@ public class PostController {
 		model.addAttribute("postId",id);
 		model.addAttribute("title","更新用フォーム");
 		
-		return "post/index";
+		return "post/home";
 	}
 	
 //	更新(update)
@@ -111,7 +132,7 @@ public class PostController {
 			Post post = makePost(postForm, postId);
 			
 			postService.update(post);
-			redirectAttributes.addFlashAttribute("complete","完了しました。");
+			redirectAttributes.addFlashAttribute("complete","Complete");
 			return "redirect:/post";
 			
 		}else {
